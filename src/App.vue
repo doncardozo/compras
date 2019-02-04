@@ -4,19 +4,21 @@
                <div class="col-lg-12">
                     <div class="row">
                          <div class="col-lg-12">
-                              <total v-bind:total="this.total" />
+                              <total v-bind:total="this.total"
+                                     v-bind:items="this.items"
+                                />
                          </div>
                     </div>
                     <div class="row">
-                         <Inputs
-                                   v-bind:total="this.total"
-                                   @add="adding($event)" />
+                         <Inputs v-bind:total="this.total"
+                                   @add="adding($event)" 
+                                />
                     </div>
                     <div class="row">
                          <div class="col-lg-12">
                               <Items v-bind:items="this.items"                                        
-                                        v-bind:total="this.total" 
-                                        />
+                                     v-bind:total="this.total" 
+                                />
                          </div>
                     </div>
                </div>

@@ -16,20 +16,14 @@
 <script>
 export default {
      props: ['item','items','total'],
-     // methods: {
-     //      scrollToEnd: function() {    	
-     //           let $c = $(".selection-group")
-     //           let scrollHeight = $c[0].scrollHeight
-     //           $c.animate({scrollTop: scrollHeight}, "fast")
-     //      }
-     // }
 }
 </script>
 <style>
      .list-group {
           max-height: 450px;
           overflow-x: scroll;
-     }
+          width: 100%          
+     }     
 </style>
 
 
