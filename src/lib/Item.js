@@ -18,6 +18,10 @@ export class Item {
           
      }*/
 
+     clean(){
+          this._db.items.clear()
+     }
+
      getAll(){          
           return this._db.items.toArray()
      }

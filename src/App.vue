@@ -11,14 +11,14 @@
                     </div>
                     <div class="row">
                          <Inputs v-bind:total="this.total"
-                                   @add="adding($event)" 
+                                   @insert="insertItem($event)" 
+                                   @update="updateItem($event)" 
+                                   @clean="cleanList($event)" 
                                 />
                     </div>
                     <div class="row">
                          <div class="col-lg-12">
-                              <Items v-bind:items="this.items"                                        
-                                     v-bind:total="this.total" 
-                                />
+                              <Items v-bind:items="this.items" />
                          </div>
                     </div>
                </div>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 
 import {IDB} from './lib/IDB'
 import {Item} from './lib/Item'
@@ -36,40 +37,47 @@ import Inputs from './components/Inputs.vue'
 
 export default {
   name: 'app',
-  data(){
-       return {
-          total: 0,
-          items: [],
-          iObj: null
-       }
-  },
-  mounted(){
-    this.iObj = new Item(new IDB())
-    this.listItems()
-  },
-  methods: {
-       adding(data){      
-          this.iObj.add(data)
-          this.listItems()
-          this.calcTotal()          
-       },
-       calcTotal(){
-          this.total = 0
-          this.items.reverse()
-          this.items.forEach(element => {
-               let curr = parseFloat(element.price*element.qty)
-               this.total += curr
-          });
-       },
-       async listItems(){
-         this.items = await this.iObj.getAll()
-         await this.calcTotal()
-       }
-  },
   components: {
     Total,
     Items,
     Inputs
+  },
+  data(){
+    return {
+      total: 0,
+      items: [],
+      iObj: null
+    }
+  },
+  mounted(){    
+    this.iObj = new Item(new IDB())
+    this.listItems()
+  },
+  methods: {
+    insertItem(data){    
+      console.log(data)
+      this.iObj.add(data)
+      this.listItems()   
+    },
+    updateItem(){
+      console.log("update")
+    },
+    cleanList(){
+      this.iObj.clean()
+      this.listItems()
+    },
+    calcTotal(){
+      this.total = 0
+      this.items.reverse()
+      this.items.forEach(element => {
+            let curr = parseFloat(element.price*element.qty)
+            this.total += curr
+      });
+    },
+    async listItems(){
+      this.items = await this.iObj.getAll()
+      await this.calcTotal()
+    }
   }
 }
 </script>
