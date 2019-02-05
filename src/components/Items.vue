@@ -22,6 +22,7 @@ export default {
      .list-group {
           max-height: 450px;
           overflow-x: scroll;
+          overflow-y: hidden;
           width: 100%          
      }     
 </style>

@@ -3,7 +3,11 @@
           <input type="text" required class="form-control" id="name" placeholder="Nombre del producto" />
           <input type="number" required class="form-control" id="price" placeholder="Precio">
           <input type="number" required class="form-control" id="qty" placeholder="Cantidad">
-          <button class="btn btn-primary add-btn" id="add" @click="add">Agregar</button>
+          <div class="btn-group">
+               <button class="btn btn-primary add-btn" id="add" @click="add">Agregar</button>
+               <button class="btn btn-warning add-btn" id="update" @click="add">Actualizar</button>
+               <button class="btn btn-danger add-btn" id="remove" @click="add">Eliminar</button>
+          </div>
      </div>
 </template>
 <script>
@@ -28,7 +32,8 @@ export default {
 <style>
      .input-tool {margin-top: 5px; width: 100%; }
      .add-btn {margin-top: 15px; margin-bottom: 15px}
-     input { width: 100% }
+     input { width: 100%; }
+     .form-control { margin-bottom: 3px}     
 </style>
 
 

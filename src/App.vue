@@ -27,6 +27,9 @@
 </template>
 
 <script>
+
+import { IDB } from './lib/IDB'
+import { Item } from './lib/Item'
 import Total from './components/Total.vue'
 import Items from './components/Items.vue'
 import Inputs from './components/Inputs.vue'
@@ -51,6 +54,9 @@ export default {
                let curr = parseFloat(element.price*element.qty)
                this.total += curr
           }); 
+       },
+       listItems(){
+
        }
   },
   components: {

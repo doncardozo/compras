@@ -1,5 +1,5 @@
 <template>
-     <div class="total">$ {{ this.total.toFixed(2) }} ({{this.items.length}} items)</div>
+     <div class="total">$ {{ this.total.toFixed(2) }} ({{this.items.length}})</div>
 </template>
 <script>
 export default {
