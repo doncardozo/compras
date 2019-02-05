@@ -72,8 +72,9 @@ export default {
       this.$refs.inputComponent.hideUpdateButton()
     },
     cleanList(){
-      this.iObj.clean()
+      this.iObj.clean()      
       this.listItems()
+      this.$refs.inputComponent.cleanInputs()
     },
     editItem(data){
       this.$refs.inputComponent.showUpdateButton()

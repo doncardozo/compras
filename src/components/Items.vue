@@ -5,7 +5,7 @@
                     <ul class="list-group " id="items">
                          <li v-for="i in items" class="list-group-item" :key="i.id">                              
                               {{i.name}}<br />
-                              Precio: {{i.price}} Cantidad: {{i.qty}}<br />
+                              Precio: $ {{i.price}} | Cantidad: {{i.qty}}<br />
                               Subtotal: {{(i.price*i.qty).toFixed(2)}}
                               <button title="Edit" 
                                         class="btn btn-sm btn-dark btn-tool" 
