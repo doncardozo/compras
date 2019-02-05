@@ -50,6 +50,9 @@ export default {
      #edit {
           margin-left: 15px
      }
+     #delete {
+          margin-left: 5px
+     }
 </style>
 
 
