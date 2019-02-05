@@ -12,6 +12,7 @@
                     </div>
                     <div class="row">
                          <Inputs v-bind:total="this.total"
+                                 v-bind:items="this.items"
                                   @insert="insertItem($event)" 
                                   @update="updateItem($event)" 
                                   @clean="cleanList($event)" 

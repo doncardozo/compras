@@ -7,14 +7,33 @@
                <button class="btn btn-primary add-btn" id="insertItem" @click="insert">Agregar</button>
                <button class="btn btn-warning add-btn" id="updateItem" @click="update">Actualizar #<span id="i_id"></span></button>
                <button class="btn btn-info add-btn" id="cancelAction" @click="cancel">Cancelar</button>
-               <button class="btn btn-danger add-btn" id="cleanList" @click="clean">Limpiar</button>
+               <button class="btn btn-danger add-btn" id="cleanList" @click="askClean">Limpiar</button>
+          </div>
+          <div class="modal" tabindex="-1" role="dialog">
+               <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                         <div class="modal-header">
+                         <h5 class="modal-title">Limpiar lista</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                         </button>
+                         </div>
+                         <div class="modal-body">
+                         <p>¿Desea eliminar todos los items?</p>
+                         </div>
+                         <div class="modal-footer">
+                         <button type="button" class="btn btn-danger" @click="clean">Si</button>
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                         </div>
+                    </div>
+               </div>
           </div>
      </div>
 </template>
 <script>
 /* eslint-disable */
 export default {
-     props: ['total'],
+     props: ['total','items'],
      mounted() {
           this.hideUpdateButton()
      },
@@ -43,8 +62,14 @@ export default {
                     this.$emit('update', {id: iId.innerText, name: name.value, price: price.value, qty: qty.value})
                }
           },
+          askClean(){
+               if(this.items.length > 0){
+                    $('.modal').modal('show')
+               }
+          },
           clean(){
-               this.$emit('clean')
+               this.$emit('clean')    
+               $('.modal').modal('hide')                         
           },
           cancel(){
                this.hideUpdateButton()
