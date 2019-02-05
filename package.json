@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bootstrap": "4.2.1",
+    "dexie": "^2.0.4",
     "express": "^4.16.4",
     "vue": "^2.5.22",
     "vue-awesome": "^3.3.1"

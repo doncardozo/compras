@@ -28,8 +28,8 @@
 
 <script>
 
-//import { IDB } from './lib/IDB'
-//import { Item } from './lib/Item'
+import {IDB} from './lib/IDB'
+import {Item} from './lib/Item'
 import Total from './components/Total.vue'
 import Items from './components/Items.vue'
 import Inputs from './components/Inputs.vue'
@@ -39,13 +39,19 @@ export default {
   data(){
        return {
           total: 0,
-          items: []
+          items: [],
+          iObj: null
        }
   },
+  mounted(){
+    this.iObj = new Item(new IDB())
+    this.listItems()
+  },
   methods: {
-       adding(data){            
-          this.items.push(data)
-          this.calcTotal()
+       adding(data){      
+          this.iObj.add(data)
+          this.listItems()
+          this.calcTotal()          
        },
        calcTotal(){
           this.total = 0
@@ -55,8 +61,9 @@ export default {
                this.total += curr
           });
        },
-       listItems(){
-
+       async listItems(){
+         this.items = await this.iObj.getAll()
+         await this.calcTotal()
        }
   },
   components: {

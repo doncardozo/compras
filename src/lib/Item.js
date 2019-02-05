@@ -6,126 +6,20 @@ export class Item {
           this._db = db
      }
 
-     add(item) {
-          let time = new Date().getTime()
-          var active = this._db.result;
-          var data = active.transaction(["items"], "readwrite");
-          var object = data.objectStore("items");
-
-          var request = object.add({          
-               name: item.name.value,
-               price: item.price.value,
-               qty: item.qty.value,
-               created_at: time
-          });
-
-          request.onerror = e => {
-               console.error(e);
-          };
-
-          data.oncomplete = () => {
-               console.log('Objeto agregado correctamente', time);
-          };
+     add(item) {          
+          this._db.items.add(item)
      }
 
-     update(item){
-          var time = new Date().getTime()
-          var active = this._db.result;
-          var data = active.transaction(["items"], "readwrite");
-          var object = data.objectStore("items");
-
-          var name = item.name.value
-          var price = item.price.value
-          var qty = item.qty.value
-
-          var selected = object.get(parseInt(item.id));
-               selected.onsuccess = function() {     
-               var data = selected.result;
-                    
-               data.name = name;
-               data.price = price
-               data.qty = qty
+     /*update(item){
           
-               var request = object.put(data);
-                         
-               request.onsuccess = () => {
-                    console.log("Updated", time)
-               };
-          };
-
      }
 
      delete(id){
-
-          var time = new Date().getTime()
-          var active = this._db.result;
-          var data = active.transaction(["items"], "readwrite");
-          var object = data.objectStore("items");
-
-          var request = object.delete(parseInt(id))
-
-          request.onsuccess = () => {               
-               console.log("Person deleted", time)
-          }
-
-          request.onerror = e => {
-               console.error(e)
-          }
-     }
+          
+     }*/
 
      getAll(){          
-          var active = this._db.result;
-          //console.log(this._db)
-          var data = active.transaction(["items"], "readonly");
-          var object = data.objectStore("items");
-
-          var elements = [];
-
-          object.openCursor().onsuccess = function (e) {
-
-               var result = e.target.result;
-
-               if (result === null) {
-                    return elements;
-               }
-               
-               elements.push(result.value);
-               
-               result.continue();
-          };
-
-          data.oncomplete = function () {
-               //console.log(elements)
-          }     
-          
-          return elements
+          return this._db.items.toArray()
      }
 
-     getTotal(){          
-          var active = this._db.result;
-          //console.log(this._db)
-          var data = active.transaction(["items"], "readonly");
-          var object = data.objectStore("items");
-
-          var total = 0;
-
-          object.openCursor().onsuccess = function (e) {
-
-               var result = e.target.result;
-
-               if (result === null) {
-                    return total;
-               }
-               
-               total += parseFloat(result.value.price*result.value.qty).toFixed(2)
-               
-               result.continue();
-          };
-
-          data.oncomplete = function () {
-               //console.log(elements)
-          }     
-          
-          return total
-     }
 }

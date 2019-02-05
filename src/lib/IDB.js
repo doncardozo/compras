@@ -1,23 +1,15 @@
 /* eslint-disable no-console */
+import Dexie from 'dexie'
 
 export class IDB {
      
      constructor(){          
-          this.db = null          
-          this.db = indexedDB.open("object", 1);
-          this.db.onupgradeneeded = () => {
-               var active = this.db.result;               
-               active.createObjectStore("items", {
-                    keyPath : 'id', autoIncrement : true 
-               });
-          };
-          this.db.onsuccess = () => {               
-               console.log('Base de datos cargada correctamente');
-          };
-          this.db.onerror = e =>  {
-               console.error(e.target.error.message);
-          };
+          var db = new Dexie("items");
+          db.version(1).stores({
+              items: '++id,name,price,qty'
+          });
 
-          return this.db
+          return db
      }       
+
 }
