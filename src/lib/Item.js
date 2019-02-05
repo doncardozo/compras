@@ -75,7 +75,7 @@ export class Item {
 
      getAll(){          
           var active = this._db.result;
-          console.log(this._db)
+          //console.log(this._db)
           var data = active.transaction(["items"], "readonly");
           var object = data.objectStore("items");
 

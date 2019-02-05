@@ -1,8 +1,12 @@
 <template>
      <div class="my-form">
-          <div class="row group">
-               <div class="col-lg-6">
-                    <label>Item <span id="p_id"></span></label>
+          <div class="row group total-box">
+               <div class="col-lg-6">                    
+                    $ {{total}}
+               </div>
+          </div>
+          <div class="row group input-box">
+               <div class="col-lg-6">                    
                     <div class="form-group">
                          <input class="form-control" type="text" id="name" placeholder="Nombre del producto">
                     </div>
@@ -17,7 +21,7 @@
           <div class="group">
                <div class="btn-group">
                     <button class="btn btn-primary btn-tool" id="addItem" @click="addItem">Agregar</button>
-                    <button class="btn btn-success btn-tool" id="updateItem" @click="updateItem">Actualizar</button>
+                    <button class="btn btn-success btn-tool" id="updateItem" @click="updateItem">Actualizar <span id="i_id"></span></button>
                     <button class="btn btn-warning btn-tool" id="cancel" @click="cancel">Cancelar</button>
                </div>
           </div>
@@ -26,20 +30,20 @@
                     <ul class="list-group">
                          <li class="list-group-item" v-for="i in this.itemList" :key="i.id">
                               <div class="">
-                                   {{i.id}} | {{i.name}} | {{i.email}}
+                                   {{i.id}} | {{i.name}} <br /> Precio: ${{i.price}} Cantidad: {{i.qty}}
                                    <div class="btn-group">
                                         <button title="Edit" 
                                                   class="btn btn-sm btn-dark btn-tool" 
                                                   id="editItem" 
                                                   @click="editItem(i)">
                                                        <icon name="edit" scale="1"></icon>
-                                                       </button>                              
+                                        </button>                              
                                         <button title="Delete" 
                                                 class="btn btn-sm btn-danger btn-tool" 
                                                 id="deleteItem" 
                                                 @click="deleteItem(i.id)">
                                                        <icon name="trash" scale="1"></icon>
-                                                       </button>                              
+                                        </button>                              
                                    </div>
                               </div>
                          </li>
@@ -65,7 +69,8 @@ export default {
               priceEl: null,
               qtyEl: null,
               btnAdd: null,
-              btnUpdate: null
+              btnUpdate: null,
+              total: 0
         }
      },
      mounted(){
@@ -74,11 +79,17 @@ export default {
           this.listItem()
           this.clearForm()
           this.hideUpdateButton()
-          this.idEl = document.querySelector("#p_id"),
+          this.calcTotal()
+          this.idEl = document.querySelector("#i_id"),
           this.nameEl = document.querySelector("#name"),
           this.priceEl = document.querySelector("#price")
           this.qtyEl = document.querySelector("#qty")
      },
+     // computed: {
+     //      total: function(){
+     //           this.listItem()
+     //      }
+     // },
      methods: {
           addItem(){
                this.item.add({
@@ -88,6 +99,7 @@ export default {
                })    
                this.listItem()
                this.clearForm()
+               this.calcTotal()
           },
           editItem(item){
                let $pid = this.idEl
@@ -107,6 +119,7 @@ export default {
                })
                this.clearForm()
                this.listItem()
+               this.calcTotal()
                this.hideUpdateButton()
           },
           deleteItem(id){
@@ -117,6 +130,12 @@ export default {
           listItem(){             
                setTimeout(() => {
                     this.itemList = this.item.getAll()
+                    this.total = 0
+                    this.itemList.forEach(element => {
+                         let curr = parseFloat(element.price*element.qty)
+                         this.total += curr                    
+                    })
+                    console.log(this.total)
                }, 200);               
           },
           cancel(){
@@ -124,7 +143,7 @@ export default {
              this.hideUpdateButton()
           },
           clearForm(){
-               var idEl = document.querySelector("#p_id")
+               var idEl = document.querySelector("#i_id")
                var nameEl = document.querySelector("#name")
                var priceEl = document.querySelector("#price")
                var qtyEl = document.querySelector("#qty")
@@ -142,7 +161,18 @@ export default {
           hideUpdateButton(){
                document.querySelector("#addItem").style.display="block"
                document.querySelector("#updateItem").style.display="none"
-          }
+          },
+          calcTotal(){
+               /*this.total = 0         
+               this.listItem()
+               console.log(this.itemList)
+               //this.itemList.reverse()
+               this.itemList.forEach(element => {
+                    console.log(element.name,element.price)
+                    let curr = parseFloat(element.price*element.qty)
+                    this.total += curr                    
+               })*/
+          },
      }
 }
 </script>
@@ -156,4 +186,6 @@ export default {
           overflow-x: hidden;
           max-height: 340px;
      }
+     .total-box {margin-top: 15px; font-size: 20px; font-weight: bold;}
+     .input-box {margin-top: 15px}
 </style>
