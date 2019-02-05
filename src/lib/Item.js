@@ -14,7 +14,8 @@ export class Item {
 
           var request = object.add({          
                name: item.name.value,
-               email: item.email.value,
+               price: item.price.value,
+               qty: item.qty.value,
                created_at: time
           });
 
@@ -23,8 +24,6 @@ export class Item {
           };
 
           data.oncomplete = () => {
-               item.name.value = '';          
-               item.email.value = '';
                console.log('Objeto agregado correctamente', time);
           };
      }
@@ -36,14 +35,16 @@ export class Item {
           var object = data.objectStore("items");
 
           var name = item.name.value
-          var email = item.email.value
+          var price = item.price.value
+          var qty = item.qty.value
 
           var selected = object.get(parseInt(item.id));
                selected.onsuccess = function() {     
                var data = selected.result;
                     
                data.name = name;
-               data.email = email
+               data.price = price
+               data.qty = qty
           
                var request = object.put(data);
                          
@@ -74,6 +75,7 @@ export class Item {
 
      getAll(){          
           var active = this._db.result;
+          console.log(this._db)
           var data = active.transaction(["items"], "readonly");
           var object = data.objectStore("items");
 
