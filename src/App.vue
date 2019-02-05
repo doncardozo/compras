@@ -6,19 +6,25 @@
                          <div class="col-lg-12">
                               <total v-bind:total="this.total"
                                      v-bind:items="this.items"
+                                     ref="totalComponent"
                                 />
                          </div>
                     </div>
                     <div class="row">
                          <Inputs v-bind:total="this.total"
-                                   @insert="insertItem($event)" 
-                                   @update="updateItem($event)" 
-                                   @clean="cleanList($event)" 
+                                  @insert="insertItem($event)" 
+                                  @update="updateItem($event)" 
+                                  @clean="cleanList($event)" 
+                                  ref="inputComponent"
                                 />
                     </div>
                     <div class="row">
                          <div class="col-lg-12">
-                              <Items v-bind:items="this.items" />
+                              <Items v-bind:items="this.items"
+                                    @edit="editItem($event)"
+                                    @remove="removeItem($event)"
+                                    ref="itemsComponent"
+                                />
                          </div>
                     </div>
                </div>
@@ -54,17 +60,28 @@ export default {
     this.listItems()
   },
   methods: {
-    insertItem(data){    
-      console.log(data)
+    insertItem(data){          
       this.iObj.add(data)
       this.listItems()   
     },
-    updateItem(){
-      console.log("update")
+    updateItem(data){
+      this.iObj.update(data)   
+      this.listItems()
+      this.$refs.inputComponent.cleanInputs()
+      this.$refs.inputComponent.hideUpdateButton()
     },
     cleanList(){
       this.iObj.clean()
       this.listItems()
+    },
+    editItem(data){
+      this.$refs.inputComponent.showUpdateButton()
+      this.$refs.inputComponent.setInputs(data)
+    },
+    removeItem(id){
+      this.iObj.delete(id)
+      this.listItems()
+      this.$refs.inputComponent.cleanInputs()
     },
     calcTotal(){
       this.total = 0

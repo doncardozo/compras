@@ -10,13 +10,13 @@
                               <button title="Edit" 
                                         class="btn btn-sm btn-dark btn-tool" 
                                         id="edit" 
-                                        @click="editItem(i)">
+                                        @click="edit(i)">
                                              <icon name="edit" scale="1"></icon>
                               </button>                              
                               <button title="Delete" 
                                         class="btn btn-sm btn-danger btn-tool" 
                                         id="delete" 
-                                        @click="deleteItem(i.id)">
+                                        @click="remove(i.id)">
                                              <icon name="trash" scale="1"></icon>
                               </button>
                          </li>
@@ -27,14 +27,15 @@
 </template>
 <script>
 /* eslint-disable */
+
 export default {
      props: ['items'],
      methods: {
-          editItem(item){
-               console.log(item)
+          edit(item){
+               this.$emit('edit', item)
           },
-          deleteItem(id){
-               console.log(id)
+          remove(id){
+               this.$emit('remove', id)
           }
      }
 }

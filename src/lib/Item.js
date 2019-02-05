@@ -8,15 +8,21 @@ export class Item {
 
      add(item) {          
           this._db.items.add(item)
+          .catch(e => console.log(e))
      }
 
-     /*update(item){
-          
+     update(item){          
+          this._db.items.update(parseInt(item.id), {
+               name: item.name,
+               price: item.price,
+               qty: item.qty
+          }).catch(e => console.log(e))     
      }
 
      delete(id){
-          
-     }*/
+          this._db.items.delete(parseInt(id))
+          .catch(e => console.log(e))
+     }
 
      clean(){
           this._db.items.clear()
