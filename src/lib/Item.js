@@ -88,9 +88,10 @@ export class Item {
                if (result === null) {
                     return elements;
                }
-
+               
                elements.push(result.value);
-                    result.continue();
+               
+               result.continue();
           };
 
           data.oncomplete = function () {
@@ -98,5 +99,33 @@ export class Item {
           }     
           
           return elements
+     }
+
+     getTotal(){          
+          var active = this._db.result;
+          //console.log(this._db)
+          var data = active.transaction(["items"], "readonly");
+          var object = data.objectStore("items");
+
+          var total = 0;
+
+          object.openCursor().onsuccess = function (e) {
+
+               var result = e.target.result;
+
+               if (result === null) {
+                    return total;
+               }
+               
+               total += parseFloat(result.value.price*result.value.qty).toFixed(2)
+               
+               result.continue();
+          };
+
+          data.oncomplete = function () {
+               //console.log(elements)
+          }     
+          
+          return total
      }
 }
